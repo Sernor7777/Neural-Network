@@ -66,16 +66,12 @@ void Network::train(const std::vector<TrainingData>& trainingExamples,
         targets.emplace_back(targetMap);
     }
 
-    uint32_t step = 0;
-
     for (uint32_t epoch = 1; epoch <= epochs; ++epoch)
     {
         double totalLoss = 0;
 
         for (uint32_t batchStart = 0; batchStart < trainingExamples.size(); batchStart += batchSize)
         {
-            ++step;
-
             uint32_t batchEnd = std::min(batchStart + batchSize, static_cast<uint32_t>(trainingExamples.size()));
             for (uint32_t i = batchStart; i < batchEnd; ++i)
             {
@@ -89,7 +85,7 @@ void Network::train(const std::vector<TrainingData>& trainingExamples,
             }
             uint32_t actualBatchSize = batchEnd - batchStart;
             averageGradients(actualBatchSize);
-            learningRate = scheduler.getLearningRate(step);
+            learningRate = scheduler.getLearningRate(epoch);
             update(learningRate, optimizerType);
         }
 

@@ -5,7 +5,7 @@
 
 [[nodiscard]] double Scheduler::getLearningRate(uint32_t step) const
 {
-    if (warmupSteps != 0 && step <= warmupSteps) { return initialLearningRate * step / warmupSteps; }
+    if (step <= warmupSteps) { return initialLearningRate * step / warmupSteps; }
     switch (type)
     {
     case SchedulerType::Cosine_Decay :
