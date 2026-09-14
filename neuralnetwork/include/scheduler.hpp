@@ -25,6 +25,5 @@ private:
     double   initialLearningRate;
     double   minimumLearningRate;
     uint32_t totalSteps;
-    bool     warmupEnabled;
     uint32_t warmupSteps;
 };

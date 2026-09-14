@@ -5,13 +5,13 @@
 
 [[nodiscard]] double Scheduler::getLearningRate(uint32_t step) const
 {
-    if (warmupEnabled && step < warmupSteps) { return initialLearningRate * step / warmupSteps; }
+    if (warmupSteps != 0 && step <= warmupSteps) { return initialLearningRate * step / warmupSteps; }
     switch (type)
     {
     case SchedulerType::Cosine_Decay :
         return minimumLearningRate
              + (0.5 * (initialLearningRate - minimumLearningRate)
-                * (1 + std::cos(step * std::numbers::pi / (totalSteps - warmupSteps))));
+                * (1 + std::cos((step - warmupSteps) * std::numbers::pi / (totalSteps - warmupSteps))));
     default :
         return initialLearningRate;
     }
@@ -30,6 +30,5 @@ void Scheduler::setParameters(double        initialLearningRate,
     this->initialLearningRate = initialLearningRate;
     this->minimumLearningRate = minimumLearningRate;
     this->totalSteps          = totalSteps;
-    warmupEnabled             = enableWarmup;
-    warmupSteps               = warmupEnabled * totalSteps * 0.05;
+    warmupSteps               = enableWarmup * totalSteps * 0.05;
 }

@@ -20,8 +20,6 @@ public:
                 double                         learningRate,
                 OptimizerType                  optimizerType);
 
-    void setParameters(std::vector<uint32_t> inputCount, std::vector<uint32_t> neuronCount, OptimizerType optimizerType);
-
     void addLayer(uint32_t inputCount, uint32_t neuronCount);
 
 private:

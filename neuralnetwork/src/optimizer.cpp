@@ -43,27 +43,6 @@ void Optimizer::update(std::vector<Eigen::MatrixXd*>& weights,
     }
 }
 
-void Optimizer::setParameters(std::vector<uint32_t> inputCount,
-                              std::vector<uint32_t> neuronCount,
-                              OptimizerType         optimizerType)
-{
-    size_t layerCount = inputCount.size();
-
-    weightFirstMoments.resize(layerCount);
-    weightSecondMoments.resize(layerCount);
-    biasFirstMoments.resize(layerCount);
-    biasSecondMoments.resize(layerCount);
-
-    for (size_t i = 0; i < layerCount; ++i)
-    {
-        weightFirstMoments[i].setZero(neuronCount[i], inputCount[i]);
-        weightSecondMoments[i].setZero(neuronCount[i], inputCount[i]);
-
-        biasFirstMoments[i].setZero(neuronCount[i]);
-        biasSecondMoments[i].setZero(neuronCount[i]);
-    }
-}
-
 void Optimizer::addLayer(uint32_t inputCount, uint32_t neuronCount)
 {
     weightFirstMoments.emplace_back(Eigen::MatrixXd::Zero(neuronCount, inputCount));
